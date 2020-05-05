@@ -30,7 +30,7 @@
 //                    ================
 //                      LAN 10.1.2.0
 
-// Important things to note about the given topology..
+// Important things to note about the given topology.'.
 
 /* There are 2 p2p nodes + 4 CSMA nodes. 
    However, n1 is part of both p2p and CSMA network.
