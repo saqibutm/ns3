@@ -21,11 +21,12 @@
 #include "ns3/point-to-point-module.h"
 #include "ns3/applications-module.h"
 #include "ns3/ipv4-global-routing-helper.h"
+#include "ns3/netanim-module.h"
 
 // Default Network Topology
 //
 //       10.1.1.0
-// n0 client --------n1   n2   n3   n4 server
+// n0 __      --------n1   n2   n3   n4 server
 //    point-to-point  |    |    |    |
 //                    ================
 //                      LAN 10.1.2.0
@@ -140,6 +141,19 @@ main (int argc, char *argv[])
   csma.EnablePcap ("csma", csmaDevices.Get (1), true);
   csma.EnablePcap ("csma", csmaDevices.Get (2), true);
   csma.EnablePcap ("csma", csmaDevices.Get (3), true);
+
+  // Network Animation
+  AnimationInterface anim ("second.xml");
+  anim.SetConstantPosition(p2pNodes.Get(0),  10.0, 10.0);
+  anim.SetConstantPosition(csmaNodes.Get(0), 20.0, 20.0);
+  anim.SetConstantPosition(csmaNodes.Get(1), 30.0, 30.0);
+  anim.SetConstantPosition(csmaNodes.Get(2), 40.0, 40.0);
+  anim.SetConstantPosition(csmaNodes.Get(3), 50.0, 50.0);
+
+  // Ascii TraceMetrics
+  AsciiTraceHelper ascii;
+  pointToPoint.EnableAsciiAll(ascii.CreateFileStream("point2point.tr"));
+  csma.EnableAsciiAll(ascii.CreateFileStream("csma.tr"));
 
   Simulator::Run ();
   Simulator::Destroy ();
