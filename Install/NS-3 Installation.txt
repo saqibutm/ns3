@@ -1,0 +1,141 @@
+
+Step 1:
+Install VMware Workstation
+Install Ubuntu 14.04 LTS 32 or 64 bit depending on the architecture of the machine
+Install VMware tools and enable shared folder
+
+Step 2:
+Open your terminal(ctrl+alt+T)
+sudo apt-get update
+sudo apt-get upgrade
+
+Step 3:
+Download NS-3 from the link: https://www.nsnam.org/
+Working directory: /home/saqibali/ns-allinone-3.25
+
+Step 4:
+sudo apt-get install gcc g++ python python-dev qt4-dev-tools libqt4-dev mercurial bzr cmake libc6-dev libc6-dev-i386 g++-multilib gdb valgrind gsl-bin libgsl0-dev flex bison libfl-dev tcpdump sqlite sqlite3 libsqlite3-dev libxml2 libxml2-dev libgtk2.0-0 libgtk2.0-dev vtun lxc uncrustify doxygen graphviz imagemagick texlive texlive-extra-utils texlive-latex-extra texlive-font-utils texlive-lang-portuguese dvipng python-sphinx dia python-pygraphviz python-kiwi python-pygoocanvas libgoocanvas-dev ipython libboost-signals-dev libboost-filesystem-dev openmpi-bin openmpi-common openmpi-doc libopenmpi-dev synaptic unrar git cvs cmake autoconf p7zip-full
+
+
+sudo apt-get libgsl0ldbl
+
+
+Step 5:
+Check for any missing prerequisites.
+cd to bake in NS-3 installation folder 
+cd bake
+./bake.py check
+
+Alternative method using bake tool
+./bake.py check
+./bake.py configure -e ns-3.25
+./bake.py show
+./bake.py deploy
+sudo ./waf -d debug --enable-examples --enable-tests configure
+./test.py
+
+Step 6:
+Go to ns-allin one folder and there  you can find build.py along with other files. Then to build the examples in ns-3 run:
+cd ns-allinone-3
+./build.py --enable-examples --enable-tests
+cd ns-3.25
+./waf -d debug --enable-examples --enable-tests configure
+./test.py
+
+Step 7:
+To run a first script in NS-3
+cd to /home/saqibali/ns-allinone-3.25/ns-3.25
+copy first.cc from examples to scratch folder. You can use cp command.
+cp examples/tutorial/first.cc scratch/
+./waf --run scratch/first
+
+2nd example:
+cp examples/wireless/mixed-wireless.cc scratch/
+./waf --run scratch/mixed-wireless --vis
+
+Step 8:
+Installing Netanim
+Open Synaptic and install following libraries
+qt4-qmake
+libqt4-dev
+libxml2-dev
+
+cd /home/saqibali/ns-allinone-3.25/netanim-3.107
+make clean
+qmake NetAnim.pro
+make
+./NetAnim
+
+Editing first.cc
+#include "ns3/netanim-module.h"
+AnimationInterface anim ("anim1.xml");
+anim.SetConstantPosition(nodes.Get(0), 1.0, 2.0);
+anim.SetConstantPosition(nodes.Get(1), 2.0, 3.0);
+  
+  
+
+Step 9:
+Download Eclipse IDE for C/C++ Developers for Linux depending on your 32 or 64 bit Machine
+Unzip it in Linux Home folder
+
+Run Eclipse
+From help go to Eclipse Marketplace and mercurial eclipse
+
+4. In Eclipse, go to Help → Install New Software.
+You should insert http://cbes.javaforge.com/update and mercurialeclipse in the form. It is simple, just follow the video. (After this step, the Internet is no longer needed)
+Eclipse Market Place
+
+/home/saqibali/ns-allinone-3.25/ns-3.25
+
+Step 10:
+
+Follow the steps in the link http://www.wikihow.com/Install-Oracle-Java-JDK-on-Ubuntu-Linux
+
+Check to see if your Ubuntu Linux operating system architecture is 32-bit or 64-bit, open up a terminal and run the following command below.
+Type/Copy/Paste: file /sbin/init 
+
+java -version
+if open java is already installed, remove it.
+sudo apt-get purge openjdk-\*
+
+Install Oracle Java (Java SE Development Kit 32 or 64 bit) from http://www.oracle.com/technetwork/java/javase/downloads/index.html
+sudo mkdir -p /usr/local/java
+sudo cp -r jdk-8u101-linux-x64.tar.gz /usr/local/java/
+cd /usr/local/java
+sudo tar xvzf jdk-8u101-linux-x64.tar.gz
+sudo gedit /etc/profile
+
+JAVA_HOME=/usr/local/java/jdk1.8.0_101
+JRE_HOME=/usr/local/java/jdk1.8.0_101/jre
+PATH=$PATH:$JRE_HOME/bin:$JAVA_HOME/bin
+export JAVA_HOME
+export JRE_HOME
+export PATH
+
+sudo update-alternatives --install "/usr/bin/java" "java" "/usr/local/java/jdk1.8.0_101/jre/bin/java" 1
+sudo update-alternatives --install "/usr/bin/javac" "javac" "/usr/local/java/jdk1.8.0_101/bin/javac" 1 
+sudo update-alternatives --install "/usr/bin/javaws" "javaws" "/usr/local/java/jdk1.8.0_101/bin/javaws" 1
+
+sudo update-alternatives --set java /usr/local/java/jdk1.8.0_101/jre/bin/java
+sudo update-alternatives --set javac /usr/local/java/jdk1.8.0_101/bin/javac
+sudo update-alternatives --set javaws /usr/local/java/jdk1.8.0_101/bin/javaws 
+
+source /etc/profile
+
+java -version 
+javac -version 
+
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+
