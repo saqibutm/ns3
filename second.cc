@@ -25,10 +25,11 @@
 // Default Network Topology
 //
 //       10.1.1.0
-// n0 -------------- n1   n2   n3   n4
+// n0 client --------n1   n2   n3   n4 server
 //    point-to-point  |    |    |    |
 //                    ================
 //                      LAN 10.1.2.0
+
 
 // Important things to note about the topology.
 
@@ -74,14 +75,18 @@ main (int argc, char *argv[])
   csmaNodes.Add (p2pNodes.Get (1));  // Append p2p node to CSMA container
   csmaNodes.Create (nCsma); // the value of CSMA is 3. Thus, total CSMA nodes becomes 4.
 
+
+
+
   // p2p channel creation and attribute specification
   PointToPointHelper pointToPoint;
   pointToPoint.SetDeviceAttribute ("DataRate", StringValue ("5Mbps"));
   pointToPoint.SetChannelAttribute ("Delay", StringValue ("2ms"));
 
-  // Net device creation and installtion of p2p channel
+// Net device creation and installtion of p2p channel
   NetDeviceContainer p2pDevices;
   p2pDevices = pointToPoint.Install (p2pNodes);
+
 
   // csma channel creation and attribute specificaions
   CsmaHelper csma;
@@ -94,7 +99,7 @@ main (int argc, char *argv[])
 
   // Installation of protocol stack
   InternetStackHelper stack;
-  stack.Install (p2pNodes.Get (0));
+  stack.Install (p2pNodes.Get (0)); 
   stack.Install (csmaNodes);
   
   // IP address base class specifications
@@ -131,8 +136,10 @@ main (int argc, char *argv[])
 
   // enabling pcap trace files whcih can be read through wireshark or tcpdump
   pointToPoint.EnablePcapAll ("p2p");
-  csma.EnablePcap ("csma1", csmaDevices.Get (1), true);
-  csma.EnablePcap ("csma3", csmaDevices.Get (3), true);
+  csma.EnablePcap ("csma", csmaDevices.Get (0), true);
+  csma.EnablePcap ("csma", csmaDevices.Get (1), true);
+  csma.EnablePcap ("csma", csmaDevices.Get (2), true);
+  csma.EnablePcap ("csma", csmaDevices.Get (3), true);
 
   Simulator::Run ();
   Simulator::Destroy ();
