@@ -26,7 +26,7 @@
 // Default Network Topology
 //
 //       10.1.1.0
-// n0 __      --------n1   n2   n3   n4 server
+// n0 -------------- n1   n2   n3   n4
 //    point-to-point  |    |    |    |
 //                    ================
 //                      LAN 10.1.2.0

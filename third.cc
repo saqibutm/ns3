@@ -18,11 +18,14 @@
 #include "ns3/point-to-point-module.h"
 #include "ns3/network-module.h"
 #include "ns3/applications-module.h"
+#include "ns3/wifi-module.h"
 #include "ns3/mobility-module.h"
 #include "ns3/csma-module.h"
 #include "ns3/internet-module.h"
-#include "ns3/yans-wifi-helper.h"
-#include "ns3/ssid.h"
+
+//Added for flow monitor
+#include "ns3/flow-monitor.h"
+#include "ns3/flow-monitor-helper.h"
 
 // Default Network Topology
 //
@@ -160,7 +163,7 @@ main (int argc, char *argv[])
   serverApps.Stop (Seconds (10.0));
 
   UdpEchoClientHelper echoClient (csmaInterfaces.GetAddress (nCsma), 9);
-  echoClient.SetAttribute ("MaxPackets", UintegerValue (1));
+  echoClient.SetAttribute ("MaxPackets", UintegerValue (100));
   echoClient.SetAttribute ("Interval", TimeValue (Seconds (1.0)));
   echoClient.SetAttribute ("PacketSize", UintegerValue (1024));
 
@@ -170,6 +173,11 @@ main (int argc, char *argv[])
   clientApps.Stop (Seconds (10.0));
 
   Ipv4GlobalRoutingHelper::PopulateRoutingTables ();
+
+// Flow monitor
+Ptr<FlowMonitor> flowMonitor;
+FlowMonitorHelper flowHelper;
+flowMonitor = flowHelper.InstallAll();
 
   Simulator::Stop (Seconds (10.0));
 
@@ -181,6 +189,9 @@ main (int argc, char *argv[])
     }
 
   Simulator::Run ();
+//Following line is added for flow monitor
+flowMonitor->SerializeToXmlFile("third.xml", true, true);
+
   Simulator::Destroy ();
   return 0;
 }
