@@ -30,7 +30,7 @@ echo "============================================="
 echo "Install dependencies for Python"
 echo "============================================="
 echo ""
-sudo apt-get -fy install python3-setuptools git mercurial
+sudo apt-get -fy install python3-setuptools git mercurial python3-matplotlib
 sudo apt-get -fy install python-pip
 
 echo ""
